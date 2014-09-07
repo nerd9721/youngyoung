@@ -10,7 +10,6 @@
     "morgan": "~1.0.0",
     "body-parser": "~1.0.0",
     "method-override": "~1.0.0",
-    "jade": "*"
-      
+    "multer": "0.1.4"
   }
 }

@@ -1,17 +1,25 @@
 
+var sys = require("sys");
+var fs = require("fs");
+var http = require("http");
 
 exports.index = function(req, res){
+  res.setHeader('content-type', 'text/html');
   res.sendfile('./public/index.html');
 };
 
 
-exports.about = function(req, res){
-  console.log('from about 파라미터?');
-  res.send('this is a about!');
+exports.upload = function(req, res){
+  console.log('18181818');
+  res.setHeader('content-type', 'text/html');
+  
+  res.sendfile('./public/upload.html');
 };
 
 
-exports.about_param = function(req, res){
-  console.log('from about_param 파라미터?', req.params.name);
-  res.send('this is a about!');
+exports.upload2 = function(req, res){
+  res.setHeader('content-type', 'text/html');
+  res.send('hello sex');
+  //res.sendfile('hello sex');
+  //res.sendfile('./public/upload.html');
 };
