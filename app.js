@@ -38,6 +38,9 @@ router.get('/upload', routes.upload);
 
 router.post('/upload2', routes.upload2);
 
+router.get('/get_download', routes.get_download);
+router.get('/download/:id', routes.download);
+
 app.use('/', router);
 
 app.listen(port);
