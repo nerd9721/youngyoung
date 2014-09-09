@@ -33,6 +33,9 @@ router.use(function(req, res, next){
   next();
 });
 
+
+
+
 router.get('/', routes.index);
 router.get('/upload', routes.upload);
 
@@ -44,6 +47,9 @@ router.get('/download/:id', routes.download);
 router.get('/rpm_upload', routes.rpm_upload);
 
 router.get('/play', routes.play);
+
+router.get('/login', routes.login);
+router.post('/login', routes.login_post);
 
 app.use('/', router);
 

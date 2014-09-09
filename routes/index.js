@@ -58,3 +58,20 @@ exports.play = function(req, res){
   res.setHeader('content-type', 'text/html');
   res.sendfile('./public/play.html');
 };
+
+
+exports.login = function(req, res){
+  res.setHeader('content-type', 'text/html');
+  res.sendfile('./public/login.html');
+};
+
+exports.login_post = function(req, res){
+  res.setHeader('content-type', 'text/html');
+  res.send('hello sex login');
+};
+
+
+
+
+
+
