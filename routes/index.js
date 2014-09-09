@@ -45,3 +45,16 @@ exports.download = function(req, res){
   res.download(file_path);
   //res.send('hello sex download');
 };
+
+
+exports.rpm_upload = function(req, res){
+  res.setHeader('content-type', 'text/html');
+  res.sendfile('./public/rpm_upload.html');
+};
+
+
+
+exports.play = function(req, res){
+  res.setHeader('content-type', 'text/html');
+  res.sendfile('./public/play.html');
+};

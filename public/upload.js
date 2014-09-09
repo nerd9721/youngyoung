@@ -1,5 +1,7 @@
 angular.module('app', [], function() {})
+
 FileUploadCtrl.$inject = ['$scope'];
+
 function FileUploadCtrl(scope) {
     //============== DRAG & DROP =============
     // source for drag&drop: http://www.webappers.com/2011/09/28/drag-drop-file-upload-with-html5-javascript/
@@ -15,6 +17,7 @@ function FileUploadCtrl(scope) {
             scope.dropClass = '';
         });
     }
+    
     dropbox.addEventListener("dragenter", dragEnterLeave, false);
     dropbox.addEventListener("dragleave", dragEnterLeave, false);
     
@@ -50,15 +53,15 @@ function FileUploadCtrl(scope) {
     //============== DRAG & DROP =============
 
     scope.setFiles = function(element) {
-    scope.$apply(function(scope) {
-      console.log('files:', element.files);
-      // Turn the FileList object into an Array
-        scope.files = []
-        for (var i = 0; i < element.files.length; i++) {
-          scope.files.push(element.files[i]);
-        }
-      scope.progressVisible = false;
-      });
+      scope.$apply(function(scope) {
+        console.log('files:', element.files);
+        // Turn the FileList object into an Array
+          scope.files = []
+          for (var i = 0; i < element.files.length; i++) {
+            scope.files.push(element.files[i]);
+          }
+        scope.progressVisible = false;
+        });
     };
 
     scope.uploadFile = function() {
@@ -67,11 +70,15 @@ function FileUploadCtrl(scope) {
             fd.append("uploadedFile", scope.files[i]);
         }
         var xhr = new XMLHttpRequest();
+        
         xhr.upload.addEventListener("progress", uploadProgress, false);
+        
         xhr.addEventListener("load", uploadComplete, false);
         xhr.addEventListener("error", uploadFailed, false);
         xhr.addEventListener("abort", uploadCanceled, false);
+        
         xhr.open("POST", "/upload2");
+        
         scope.progressVisible = true;
         xhr.send(fd);
     }
