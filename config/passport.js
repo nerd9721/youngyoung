@@ -72,8 +72,9 @@ module.exports = function(passport) {
       
       function(username, password, done) {
         console.log('19818181881');
-        
-          done(null, {id:0 , username: username});
+          
+          return done(null, false,  { message: 'Incorrect username.'});
+          //done(null, {id:0 , username: username});
       
         }
         

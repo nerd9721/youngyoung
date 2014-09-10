@@ -28,13 +28,13 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride());
 app.use(multer({ dest: './uploads/' }));
 
-
+app.use(flash());
 // 인증 관련
 app.use( cookieParser() );
 app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(flash()); // use connect-flash for flash messages stored in session
+//app.use(flash());
 
 
 var env = process.env.NODE_ENV || 'development';
@@ -78,15 +78,19 @@ router.get('/play', isLoggedIn, routes.play);
 router.get('/login', routes.login);
 //router.post('/login', routes.login_post);
 
-router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),
+//router.post('/login', passport.authenticate('local', { failureRedirect: '/login' }),
+router.post('/login', passport.authenticate('local', {  failureRedirect: '/login',
+                                                        failureFlash: true, //failureFlash: 'Invalid username or password.'
+                                                         }),
     function(req, res) {
       res.redirect('/rpm_upload');
  } );
 
 
+
 //router.post('/login', routes.login_post),
 
-    
+router.get('/logout', isLoggedIn, routes.logout);
     
 app.use('/', router);
 

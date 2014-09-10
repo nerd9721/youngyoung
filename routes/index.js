@@ -62,12 +62,24 @@ exports.play = function(req, res){
 
 exports.login = function(req, res){
   res.setHeader('content-type', 'text/html');
+  
+  res.locals.errors = req.flash();
+  console.log(res.locals.errors);
+  
+  // greetting 을 login.html로 보내고싶음 template 처럼
+
   res.sendfile('./public/login.html');
 };
 
 exports.login_post = function(req, res){
   res.setHeader('content-type', 'text/html');
   res.send('hello sex login');
+};
+
+exports.logout = function(req, res){
+  console.log('logout 처리');
+  req.logOut();
+  res.redirect("/");
 };
 
 
