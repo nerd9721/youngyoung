@@ -29,7 +29,14 @@ app.use(bodyParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(methodOverride());
-app.use(multer({ dest: './uploads/' }));
+//app.use(multer({ dest: './uploads/'}));
+
+app.use(multer({ dest: './uploads/',
+  rename: function (fieldname, filename) {
+    //return filename.replace(/\W+/g, '-').toLowerCase() + Date.now();
+    return  filename + '_' + Date.now();
+  }}));
+
 
 app.use(flash());
 // 인증 관련
@@ -75,7 +82,7 @@ var router = express.Router();
 
 router.use(function(req, res, next){
   //console.log('파이프1');
-  console.log(req.session);
+  //console.log(req.session);
   next();
 });
 

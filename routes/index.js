@@ -2,6 +2,8 @@
 var sys = require("sys");
 var fs = require("fs");
 var http = require("http");
+var util = require('util');
+var mkdirp = require('mkdirp');
 
 exports.index = function(req, res){
   res.setHeader('content-type', 'text/html');
@@ -17,10 +19,67 @@ exports.upload = function(req, res){
 };
 
 
-exports.upload2 = function(req, res){
+
+exports.upload2 = function(req, res, next){
   res.setHeader('content-type', 'text/html');
-  res.send('hello sex');
-  //res.sendfile('hello sex');
+  console.log('AAAAAAAAAAAAAAAAAa');
+  
+  console.log(req.user);
+  
+  var username = 'kyunghun2';
+  console.log(req.body);
+  console.log(req.files);
+  
+  
+  // name으로 복사하고 파일이름은 originalname으로 가고
+  // 끝나면 name을 삭제해버림
+  
+  var path = '/home/pp/storage/'+username +'/';
+  
+  mkdirp(path, function (err) {
+      if (err){
+        console.error(err);
+      }
+      else{ 
+        console.log('pow!');
+        var del_path = './uploads/' + req.files.file.name;
+        var source = fs.createReadStream('./uploads/' + req.files.file.name);
+        var dest = fs.createWriteStream(path + req.files.file.originalname);
+        
+        source.pipe(dest);
+        source.on('end', function() {
+          // upload 파일에 있는 파일 삭제하기
+          fs.unlinkSync(del_path);
+        
+          res.send('hello sex'); 
+          });
+        
+        source.on('error', function(err) {  });
+      }
+  });
+ 
+  /*
+  var path = '/home/pp/storage/'+username +'/';
+ 
+  var del_path = './uploads/' + req.files.file.name;
+  var source = fs.createReadStream('./uploads/' + req.files.file.name);
+  var dest = fs.createWriteStream(path + req.files.file.name);
+  
+  
+  console.log(source);
+  console.log(dest);
+  
+  source.pipe(dest);
+  source.on('end', function() { 
+    // upload 파일에 있는 파일 삭제하기
+    fs.unlinkSync(del_path);
+    res.send('hello sex'); 
+    });
+  
+  source.on('error', function(err) {  });
+  
+*/
+  //res.send('hello sex');
   //res.sendfile('./public/upload.html');
 };
 
@@ -43,6 +102,7 @@ exports.download = function(req, res){
   console.log(file_path);
  
   res.download(file_path);
+  
   
   //res.send('hello sex download');
 };

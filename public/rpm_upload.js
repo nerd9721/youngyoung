@@ -67,7 +67,7 @@ angular.module('app', ['angularFileUpload'])
         
         uploader.onCompleteItem = function(fileItem, response, status, headers) {
             console.info('onCompleteItem', fileItem, response, status, headers);
-            alert('니미 자지다');
+            //alert('니미 자지다');
         };
         
         
