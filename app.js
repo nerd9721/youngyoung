@@ -9,6 +9,9 @@ var flash    = require('connect-flash');
 var cookieParser = require('cookie-parser');
 var session      = require('express-session');
 
+var session = require('express-session');
+var RedisStore = require('connect-redis')(session);
+
 var app            = express();
 var routes = require('./routes');
 var mongoose = require('mongoose');
@@ -31,7 +34,18 @@ app.use(multer({ dest: './uploads/' }));
 app.use(flash());
 // 인증 관련
 app.use( cookieParser() );
-app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+//app.use(session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+
+
+var options = {
+    host: 'localhost',
+    port: 6379,
+    db: 2,
+};
+app.use(session({
+    store: new RedisStore(options),
+    secret: 'ilovescotchscotchyscotchscotch cat'
+}));
 app.use(passport.initialize());
 app.use(passport.session());
 //app.use(flash());
@@ -49,6 +63,9 @@ function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
     return next();
 
+  //console.log('@@@@@@@@@@@@@');
+  //console.log(req.session);
+  //console.log(req.user);
   // if they aren't redirect them to the home page
   res.redirect('/login');
 }
@@ -58,7 +75,7 @@ var router = express.Router();
 
 router.use(function(req, res, next){
   //console.log('파이프1');
-  console.log(req.user);
+  console.log(req.session);
   next();
 });
 
@@ -71,7 +88,9 @@ router.post('/upload2', routes.upload2);
 router.get('/get_download', routes.get_download);
 router.get('/download/:id', routes.download);
 
+
 router.get('/rpm_upload', isLoggedIn, routes.rpm_upload);
+//router.get('/rpm_upload', routes.rpm_upload);
 
 router.get('/play', isLoggedIn, routes.play);
 
@@ -91,7 +110,7 @@ router.post('/login', passport.authenticate('local', {  failureRedirect: '/login
 //router.post('/login', routes.login_post),
 
 router.get('/logout', isLoggedIn, routes.logout);
-    
+
 app.use('/', router);
 
 app.listen(port);

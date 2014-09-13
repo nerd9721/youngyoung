@@ -41,8 +41,9 @@ exports.download = function(req, res){
   var file_path = '/home/pp/workspace/node_app/uploads/' + filename;
   
   console.log(file_path);
-  
+ 
   res.download(file_path);
+  
   //res.send('hello sex download');
 };
 

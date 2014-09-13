@@ -69,12 +69,12 @@ module.exports = function(passport) {
   });
   
   passport.use('local', new LocalStrategy(
-      
+      // 유저가 있는지 확인함
       function(username, password, done) {
         console.log('19818181881');
           
-          return done(null, false,  { message: 'Incorrect username.'});
-          //done(null, {id:0 , username: username});
+          //return done(null, false,  { message: 'Incorrect username.'});
+          done(null, {id:0 , username: username});
       
         }
         
