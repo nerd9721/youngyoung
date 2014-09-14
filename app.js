@@ -11,6 +11,8 @@ var session      = require('express-session');
 
 var session = require('express-session');
 var RedisStore = require('connect-redis')(session);
+//var timeout = require('connect-timeout');
+
 
 var app            = express();
 var routes = require('./routes');
@@ -57,6 +59,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 //app.use(flash());
 
+/*
+[keep-alive 타임아웃 설정]
+app.use(timeout(12000000));
+app.use(haltOnTimedout);
+function haltOnTimedout(req, res, next){
+  if (!req.timedout)
+   next();
+}
+*/
 
 var env = process.env.NODE_ENV || 'development';
 if ('development' == env) {
@@ -117,6 +128,8 @@ router.post('/login', passport.authenticate('local', {  failureRedirect: '/login
 //router.post('/login', routes.login_post),
 
 router.get('/logout', isLoggedIn, routes.logout);
+
+router.get('/mplayer', routes.mplayer);
 
 app.use('/', router);
 

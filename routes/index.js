@@ -143,8 +143,10 @@ exports.logout = function(req, res){
   res.redirect("/");
 };
 
-
-
+exports.mplayer = function(req, res){
+  res.setHeader('content-type', 'text/html');
+  res.sendfile('./public/music/mplayer.html');
+};
 
 
 
